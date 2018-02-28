@@ -59,23 +59,24 @@ public class HomeController {
         return "redirect:/";
     }
     @GetMapping("/addfoodpage")
-    public String addProduct(Model model, Authentication authentication){
+    public String addProduct(Model model){
         PotLuck potLuck = new PotLuck();
-        AppUser itemUser = appUserRepository.findAppUserByUsername(authentication.getName());
-        potLuck.addItemUser(itemUser);
         potLuckRepository.save(potLuck);
-        model.addAttribute("potluckitem", potLuck);
         model.addAttribute("users", appUserRepository.findAll());
+        model.addAttribute("potluckitem", potLuck);
         return "addFoodPage";
     }
     @PostMapping("/processfooditem")
-    public String processItem(@Valid @ModelAttribute("product") PotLuck potLuck, Model model, BindingResult result){
+    public String processItem(@Valid @ModelAttribute("product") PotLuck potLuck, Model model, BindingResult result, Authentication authentication){
         if(result.hasErrors()){
             return "addFoodPage";
         }
         else{
+            /*if (potLuck.getItemUser() == null){*/
+                potLuck.addItemUser(appUserRepository.findAppUserByUsername(authentication.getName()));
+                potLuckRepository.save(potLuck);
 
-            potLuckRepository.save(potLuck);
+                
             return "redirect:/";
         }
     }

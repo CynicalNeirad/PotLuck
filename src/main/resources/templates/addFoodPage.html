@@ -36,17 +36,16 @@
         <input type="text" class="form-control" id="textPrice" th:field="*{foodServes}" placeholder="People Served"/>
         <span th:if="${#fields.hasErrors('foodServes')}" th:errors="*{foodServes}"></span>
     </div>
-    <br/>
-        <div class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')" th:object="${users}"
-        >
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select a User to post as
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <tr th:each="people : ${users}">
-                    <td th:text="${people.username}"></td>
-                </tr>
-            </ul>
+
+
+<!--    <p>Looking to post for another User?</p>
+    <div th:each="people : ${users}">
+        <div action="people.username" class="col-3" >
+            <td><input  type="radio" name="people" value="people.username" th:text="${people.username}"></td>
         </div>
+
+    </div>-->
+    <br/>
 
     <div class="col-3">
         <button type="submit" class="btn btn-primary">Submit</button>
