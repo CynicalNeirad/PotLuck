@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8" />
+    <title>Product</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
+</head>
+<body>
+
+<div th:replace="base::navlinks"></div>
+
+<form action="#"
+      th:action="@{/processfooditem}"
+      th:object="${potluckitem}"
+      method="post">
+    <div class="col-3">
+        <input type="hidden" th:field="*{id}" />
+    </div>
+    <div class="col-3">
+        <label id="labelReferenceProductName">Name of Food</label>
+        <input type="text" class="form-control" id="textReferenceProductName" th:field="*{foodName}" placeholder="Enter the name of your item here"/>
+        <span th:if="${#fields.hasErrors('foodName')}" th:errors="*{foodName}"></span>
+    </div>
+    <br/>
+    <div action="foodType" class="col-3">
+        <p>What type of food are you bringing?</p>
+        <input type="radio" name="foodType" value="Food"> Food
+        <input type="radio" name="foodType" value="Drink"> Drink
+        <input type="radio" name="foodType" value="Dessert"> Dessert
+    </div>
+    <br/>
+    <div class="col-3">
+        <label id="labelReferencePrice">How many people does your dish serve?</label>
+        <input type="text" class="form-control" id="textPrice" th:field="*{foodServes}" placeholder="People Served"/>
+        <span th:if="${#fields.hasErrors('foodServes')}" th:errors="*{foodServes}"></span>
+    </div>
+    <br/>
+        <div class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')" th:object="${users}"
+        >
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select a User to post as
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <tr th:each="people : ${users}">
+                    <td th:text="${people.username}"></td>
+                </tr>
+            </ul>
+        </div>
+
+    <div class="col-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+<script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
